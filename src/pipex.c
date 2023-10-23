@@ -6,8 +6,8 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:35:28 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/23 16:35:38 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:56:10 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../inc/pipex.h"
