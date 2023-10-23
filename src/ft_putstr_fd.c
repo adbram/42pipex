@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 16:35:41 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/23 19:40:30 by aberramo         ###   ########.fr       */
+/*   Created: 2023/10/23 19:39:48 by aberramo          #+#    #+#             */
+/*   Updated: 2023/10/23 19:40:03 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "../inc/pipex.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-
-typedef struct s_data
+void	ft_putstr_fd(char *str, int fd)
 {
-	int		ac;
-	char	**av;
-}	t_data;
+	int	i;
 
-void	ft_exit(t_data *data, int status);
-void	ft_putstr_fd(char *str, int fd);
-
-#endif
+	i = 0;
+	while (str[i])
+	{
+		write(fd, &str[i], 1);
+		i++;
+	}
+}

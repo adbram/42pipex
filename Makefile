@@ -6,7 +6,7 @@
 #    By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 18:25:35 by aberramo          #+#    #+#              #
-#    Updated: 2023/10/23 19:10:57 by aberramo         ###   ########.fr        #
+#    Updated: 2023/10/23 19:42:28 by aberramo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,16 @@ NAME			= pipex
 
 SRCDIR			= src
 OBJDIR			= obj
-INCDIR			= inc
 
 SRCS			= $(SRCDIR)/main.c\
 					$(SRCDIR)/pipex.c\
-					$(SRCDIR)/checker.c
+					$(SRCDIR)/checker.c\
+					$(SRCDIR)/ft_exit.c\
+					$(SRCDIR)/ft_putstr_fd.c
 OBJS			= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
-INCFLAGS		= -I$(INCDIR)
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3 $(INCFLAGS)
+CFLAGS			= -Wall -Wextra -Werror -g3
 MKDIR			= mkdir
 RM				= rm
 RMFLAGS			= -f
