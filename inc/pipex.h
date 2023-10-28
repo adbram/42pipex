@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:35:41 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/23 19:40:30 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/10/28 04:39:08 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,25 @@ typedef struct s_data
 {
 	int		ac;
 	char	**av;
+	char	**env;
+	int		fds[2];
+	pid_t	pid;
+	int		in_fd;
+	int		out_fd;
+	int		nb_cmds;
+	int		index;
 }	t_data;
 
-void	ft_exit(t_data *data, int status);
-void	ft_putstr_fd(char *str, int fd);
+typedef struct s_parsed
+{
+	char	**strs;
+	int		 size;
+}	t_parsed;
+
+void		ft_exit(t_data *d, int status);
+void		ft_putstr_fd(char *str, int fd);
+char		**ft_split(t_data *d, char *str, char *charset);
+
+void		pipex(t_data *d);
 
 #endif
