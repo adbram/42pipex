@@ -6,7 +6,7 @@
 #    By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 18:25:35 by aberramo          #+#    #+#              #
-#    Updated: 2023/10/28 04:21:44 by aberramo         ###   ########.fr        #
+#    Updated: 2023/10/28 19:31:34 by aberramo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,12 @@ OBJDIR			= obj
 
 SRCS			= $(SRCDIR)/main.c\
 					$(SRCDIR)/pipex.c\
+					$(SRCDIR)/path.c\
 					$(SRCDIR)/ft_exit.c\
 					$(SRCDIR)/ft_putstr_fd.c\
-					$(SRCDIR)/ft_split.c
+					$(SRCDIR)/ft_split.c\
+					$(SRCDIR)/ft_strjoin.c\
+					$(SRCDIR)/ft_strncmp.c
 OBJS			= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
 CC				= cc

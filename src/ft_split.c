@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 01:58:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/28 04:38:55 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:32:06 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_ischarset(char c, char *charset)
 	return (0);
 }
 
-static int	ft_strscount(char *str, char *charset)
+int	ft_strscount(char *str, char *charset)
 {
 	int	i;
 	int	count;
@@ -45,7 +45,7 @@ static int	ft_strscount(char *str, char *charset)
 	return (count);
 }
 
-static int	ft_splitlen(char *str, int j, char *charset)
+int	ft_splitlen(char *str, int j, char *charset)
 {
 	int	len;
 	int	i;
@@ -62,7 +62,7 @@ static int	ft_splitlen(char *str, int j, char *charset)
 	return (len);
 }
 
-static void	ft_strscpy(t_data *d, t_parsed *p, char *str, char *charset)
+void	ft_strscpy(t_data *d, char **strs, char *str, int strs_size, char *charset)
 {
 	int		i;
 	int		j;
@@ -71,40 +71,39 @@ static void	ft_strscpy(t_data *d, t_parsed *p, char *str, char *charset)
 
 	i = 0;
 	j = 0;
-	while (i < p->size)
+	while (i < strs_size)
 	{
 		str_len = ft_splitlen(str, j, charset);
-		p->strs[i] = (char *)malloc(sizeof(char) * str_len + 1);
-		if (!p->strs[i])
-			return (ft_splitclear(p), ft_exit(d, EXIT_FAILURE));
+		strs[i] = (char *)malloc(sizeof(char) * str_len + 1);
+		if (!strs[i])
+		{
+			ft_freetab(strs);
+			ft_exit(d, "in strcpy\n", EXIT_FAILURE);
+		}
 		while (ft_ischarset(str[j], charset))
 			j++;
 		k = 0;
 		while (k < str_len)
 		{
-			p->strs[i][k] = str[j];
+			strs[i][k] = str[j];
 			j++;
 			k++;
 		}
-		p->strs[i][k] = '\0';
+		strs[i][k] = '\0';
 		i++;
 	}
 }
 
 char	**ft_split(t_data *d, char *str, char *charset)
 {
-	t_parsed	*parsed;
+	int		strs_size;
+	char	**strs;
 
-	parsed = (t_parsed *)malloc(sizeof(t_parsed));
-	if (!parsed)
-		ft_exit(d, EXIT_FAILURE);
-	parsed->size = ft_strscount(str, charset);
-	parsed->strs = (char **)malloc(sizeof(char *) * parsed->size);
-	if (!parsed->strs)
-	{
-		ft_splitclear(parsed);
-		ft_exit(d, EXIT_FAILURE);
-	}
-	ft_strscpy(d, parsed, str, charset);
-	return (parsed->strs);
+	strs_size = ft_strscount(str, charset);
+	strs = (char **)malloc(sizeof(char *) * strs_size + sizeof(int));
+	if (!strs)
+		ft_exit(d, "split malloc\n", EXIT_FAILURE);
+	ft_strscpy(d, strs, str, strs_size, charset);
+	strs[strs_size] = 0;
+	return (strs);
 }
