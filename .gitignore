@@ -5,3 +5,5 @@
 test*
 .vscode
 pipex
+outfile
+infile
