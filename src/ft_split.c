@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 01:58:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/28 18:32:06 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/10/30 20:31:57 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,5 @@ char	**ft_split(t_data *d, char *str, char *charset)
 	if (!strs)
 		ft_exit(d, "split malloc\n", EXIT_FAILURE);
 	ft_strscpy(d, strs, str, strs_size, charset);
-	strs[strs_size] = 0;
 	return (strs);
 }
