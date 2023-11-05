@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:39:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/03 18:09:58 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:25:38 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,10 @@ int	is_path(char *str)
 	return (0);
 }
 
-char	*get_path(t_data *d)
+void	get_env_paths(t_data *d)
 {
 	int		i;
-	int		j;
-	char	*path;
 
-	if (is_path(d->cmd->tab[0]) == 1)
-		return (ft_strcpy(d, d->cmd->tab[0]));
 	i = 0;
 	while (d->env[i])
 	{	
@@ -41,29 +37,39 @@ char	*get_path(t_data *d)
 		{
 			d->env_paths = ft_split(d, d->env[i], "=:");
 			if (d->env_paths->size > 0)
-			{
-				j = 0;
-				while (j < d->env_paths->size)
-				{
-					if (j > 0)
-					{
-						path = ft_strjoin(d, d->env_paths->tab[j], d->cmd->tab[0], '/');
-						if (access(path, X_OK) == 0)
-						{
-							free_tab(d->env_paths);
-							d->env_paths = NULL;
-							return (path);
-						}
-						free(path);
-					}
-					j++;
-				}
-			}
+				return ;
 			free_tab(d->env_paths);
 			d->env_paths = NULL;
-			return (ft_exit(d, "No accessible path\n", EXIT_FAILURE), NULL);
+			ft_exit(d, "No accessible path\n", EXIT_FAILURE);
 		}
 		i++;
 	}
-	return (ft_exit(d, "No PATH in env\n", EXIT_FAILURE), NULL);
+	ft_exit(d, "No PATH in env\n", EXIT_FAILURE);
+}
+
+char	*get_path(t_data *d)
+{
+	int		j;
+	char	*path;
+
+	if (is_path(d->cmd->tab[0]) == 1)
+		return (ft_strcpy(d, d->cmd->tab[0]));
+	get_env_paths(d);
+	j = 0;
+	while (j < d->env_paths->size)
+	{
+		if (j > 0)
+		{
+			path = ft_strjoin(d, d->env_paths->tab[j], d->cmd->tab[0], '/');
+			if (access(path, X_OK) == 0)
+			{
+				free_tab(d->env_paths);
+				d->env_paths = NULL;
+				return (path);
+			}
+			free(path);
+		}
+		j++;
+	}
+	return (ft_exit(d, "No path\n", EXIT_FAILURE), NULL);
 }
