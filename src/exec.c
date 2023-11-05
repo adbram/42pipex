@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:04:18 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 18:58:55 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:56:17 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	dup_first_cmd(t_data *d)
 	d->in_fd = open(d->in_file, O_RDONLY);
 	if (d->in_fd < 0)
 		ft_exit(d, "Open infile fail\n", EXIT_FAILURE);
-	close(d->fds[0]);
+	ft_close(&d->fds[0]);
 	if (dup2(d->in_fd, STDIN_FILENO) < 0)
 		ft_exit(d, "Dup dup_first_cmd STDIN\n", EXIT_FAILURE);
 	if (dup2(d->fds[1], STDOUT_FILENO) < 0)
@@ -26,7 +26,7 @@ void	dup_first_cmd(t_data *d)
 
 void	dup_middle_cmd(t_data *d)
 {
-	close(d->fds[0]);
+	ft_close(&d->fds[0]);
 	if (dup2(d->fd_tmp, STDIN_FILENO) < 0)
 		ft_exit(d, "Dup dup_middle_cmd STDIN\n", EXIT_FAILURE);
 	if (dup2(d->fds[1], STDOUT_FILENO) < 0)

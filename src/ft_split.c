@@ -6,20 +6,18 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 01:06:23 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/03 16:33:52 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:55:59 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-void	free_split(t_data *d, t_split *s)
+void	free_split(t_data *d, t_split *s, t_tab *t)
 {
 	if (s)
-	{
-		if (s->t)
-			free_tab(s->t);
 		free(s);
-	}
+	if (t)
+		free_tab(t);
 	if (d)
 		ft_exit(d, "Split malloc fail\n", EXIT_FAILURE);
 }
@@ -54,7 +52,7 @@ void	split_len(t_split *s)
 	}
 }
 
-void	split_copy(t_data *d, t_split *s)
+void	split_copy(t_data *d, t_split *s, t_tab *t)
 {
 	while (s->i < s->size)
 	{
@@ -66,20 +64,21 @@ void	split_copy(t_data *d, t_split *s)
 			s->k++;
 			s->j++;
 		}
-		s->t->tab[s->i] = (char *)malloc(sizeof(char) * s->k + 1);
-		if (!s->t->tab[s->i])
-			free_split(d, s);
+		t->tab[s->i] = (char *)malloc(sizeof(char) * s->k + 1);
+		if (!t->tab[s->i])
+			free_split(d, s, t);
 		s->j -= s->k;
 		s->k = 0;
 		while (s->str[s->j] != '\0' && !is_charset(s, s->str[s->j]))
 		{
-			s->t->tab[s->i][s->k] = s->str[s->j];
+			t->tab[s->i][s->k] = s->str[s->j];
 			s->j++;
 			s->k++;
 		}
-		s->t->tab[s->i][s->k] = '\0';
+		t->tab[s->i][s->k] = '\0';
 		s->i++;
 	}
+	t->tab[s->i] = NULL;
 }
 
 t_tab	*ft_split(t_data *d, char *str, char *charset)
@@ -89,22 +88,21 @@ t_tab	*ft_split(t_data *d, char *str, char *charset)
 
 	s = (t_split *)malloc(sizeof(t_split));
 	if (!s)
-		free_split(d, s);
+		free_split(d, s, NULL);
 	s->str = str;
 	s->charset = charset;
 	s->i = 0;
 	s->j = 0;
 	s->size = 0;
-	s->t = (t_tab *)malloc(sizeof(t_tab));
-	if (!s->t)
-		free_split(d, s);
+	t = (t_tab *)malloc(sizeof(t_tab));
+	if (!t)
+		free_split(d, s, t);
 	split_len(s);
-	s->t->size = s->size;
-	s->t->tab = (char **)malloc(sizeof(char *) * s->size);
-	if (!s->t->tab)
-		free_split(d, s);
-	split_copy(d, s);
-	t = s->t;
+	t->size = s->size;
+	t->tab = (char **)malloc(sizeof(char *) * (s->size + 1));
+	if (!t->tab)
+		free_split(d, s, t);
+	split_copy(d, s, t);
 	free(s);
 	return (t);
 }

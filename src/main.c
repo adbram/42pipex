@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 23:27:52 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 18:51:45 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:57:55 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	*d;
 
+	errno = 0;
 	if (ac != 5)
 		ft_exit(NULL, "Ac != 5\n", EXIT_FAILURE);
 	d = init_data(ac, av, env);

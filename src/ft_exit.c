@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 23:31:07 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 19:02:50 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:31:39 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,40 @@ void	free_tab(t_tab *t)
 	}
 }
 
+int	ft_close(int *fd)
+{
+	int	ret;
+
+	ret = 0;
+	if (*fd > 0)
+	{
+		ret = close(*fd);
+		*fd = -1;
+	}
+	return (ret);
+}
+
 void	close_fds(t_data *d)
 {
-	if (d->fds[0] > 0)
-		close(d->fds[0]);
-	if (d->fds[1] > 0)
-		close(d->fds[1]);
-	if (d->in_fd > 0)
-		close(d->in_fd);
-	if (d->out_fd > 0)
-		close(d->out_fd);
-	if (d->fd_tmp > 0)
-		close(d->out_fd);
+	ft_close(&d->fds[0]);
+	ft_close(&d->fds[1]);
+	ft_close(&d->in_fd);
+	ft_close(&d->out_fd);
+	ft_close(&d->out_fd);
 }
 
 void	ft_exit(t_data *d, char *msg, int status)
 {
 	if (status == EXIT_FAILURE)
 	{
-		ft_putstr_fd("Error\n", STDERR_FILENO);
-		if (msg)
-			ft_putstr_fd(msg, STDERR_FILENO);
+		if (errno != 0)
+			perror(msg);
+		else
+		{
+			ft_putstr_fd("Error\n", STDERR_FILENO);
+			if (msg)
+				ft_putstr_fd(msg, STDERR_FILENO);
+		}
 	}
 	if (d != NULL)
 	{

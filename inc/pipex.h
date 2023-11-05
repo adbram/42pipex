@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:35:41 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/03 23:24:07 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:33:11 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_tab
 typedef struct s_split
 {
 	int		size;
-	t_tab	*t;
 	char	*str;
 	char	*charset;
 	int		i;
@@ -69,11 +68,12 @@ void	exec_cmd(t_data *d);
 void	free_tab(t_tab *t);
 void	close_fds(t_data *d);
 void	ft_exit(t_data *d, char *msg, int status);
+int		ft_close(int *fd);
 
-void	free_split(t_data *d, t_split *s);
+void	free_split(t_data *d, t_split *s, t_tab *t);
 int		is_charset(t_split *s, char c);
 void	split_len(t_split *s);
-void	split_copy(t_data *d, t_split *s);
+void	split_copy(t_data *d, t_split *s, t_tab *t);
 t_tab	*ft_split(t_data *d, char *str, char *charset);
 
 void	ft_putstr_fd(char *str, int fd);

@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 23:50:11 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 18:58:52 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:35:08 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ void	pipex(t_data *d)
 			ft_exit(d, "Fork fail\n", EXIT_FAILURE);
 		if (d->pids[d->i] == 0)
 			exec_cmd(d);
-		if (d->fds[1] > 0)
-			close(d->fds[1]);
-		if (d->fd_tmp > 0)
-			close(d->fd_tmp);
+		ft_close(&d->fds[1]);
+		ft_close(&d->fd_tmp);
 		d->fd_tmp = d->fds[0];
 		d->i++;
 	}

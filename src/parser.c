@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:39:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 19:25:38 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 20:18:49 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*get_path(t_data *d)
 	int		j;
 	char	*path;
 
+	if (d->cmd->size < 1)
+		ft_exit(d, "Blank command\n", EXIT_FAILURE);
 	if (is_path(d->cmd->tab[0]) == 1)
 		return (ft_strcpy(d, d->cmd->tab[0]));
 	get_env_paths(d);
