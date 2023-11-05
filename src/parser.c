@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:39:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 20:18:49 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 21:15:27 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ void	get_env_paths(t_data *d)
 		if (ft_strncmp(d->env[i], "PATH=", 5) == 0)
 		{
 			d->env_paths = ft_split(d, d->env[i], "=:");
-			if (d->env_paths->size > 0)
+			if (d->env_paths->size > 1)
 				return ;
 			free_tab(d->env_paths);
 			d->env_paths = NULL;
-			ft_exit(d, "No accessible path\n", EXIT_FAILURE);
+			ft_exit(d, "PATH element in env empty\n", EXIT_FAILURE);
 		}
 		i++;
 	}
-	ft_exit(d, "No PATH in env\n", EXIT_FAILURE);
+	ft_exit(d, "No PATH element in env\n", EXIT_FAILURE);
 }
 
 char	*get_path(t_data *d)
@@ -57,7 +57,7 @@ char	*get_path(t_data *d)
 	if (is_path(d->cmd->tab[0]) == 1)
 		return (ft_strcpy(d, d->cmd->tab[0]));
 	get_env_paths(d);
-	j = 0;
+	j = 1;
 	while (j < d->env_paths->size)
 	{
 		if (j > 0)

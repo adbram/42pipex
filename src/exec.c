@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:04:18 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 20:56:17 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 21:04:58 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	exec_cmd(t_data *d)
 	d->cmd = ft_split(d, d->av[d->i + 2], " \n\t\v\f\r");
 	d->path = get_path(d);
 	if (execve(d->path, d->cmd->tab, d->env) < 0)
-		ft_exit(d, "exec fail\n", EXIT_FAILURE);
+		ft_exit(d, "Exec fail\n", EXIT_FAILURE);
 	free(d->path);
 	d->path = NULL;
 	free_tab(d->cmd);

@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 23:27:52 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 20:57:55 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/05 21:05:30 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env)
 
 	errno = 0;
 	if (ac != 5)
-		ft_exit(NULL, "Ac != 5\n", EXIT_FAILURE);
+		ft_exit(NULL, "Args number != 5\n", EXIT_FAILURE);
 	d = init_data(ac, av, env);
 	pipex(d);
 	ft_exit(d, NULL, EXIT_SUCCESS);
