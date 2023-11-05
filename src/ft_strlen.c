@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 00:45:42 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/31 00:45:46 by aberramo         ###   ########.fr       */
+/*   Created: 2023/10/31 09:21:50 by aberramo          #+#    #+#             */
+/*   Updated: 2023/10/31 09:22:42 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int	ft_strncmp(const char *s1, const char *s2, int n)
+int	ft_strlen(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n && s1[i] && s2[i] && s1[i] == s2[i])
+	while (str[i])
 		i++;
-	if (i == n)
-		i--;
-	return ((unsigned char)s1[i] - s2[i]);
+	return (i);
 }

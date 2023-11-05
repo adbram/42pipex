@@ -5,104 +5,106 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 01:58:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/30 20:31:57 by aberramo         ###   ########.fr       */
+/*   Created: 2023/10/31 01:06:23 by aberramo          #+#    #+#             */
+/*   Updated: 2023/11/03 16:33:52 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int	ft_ischarset(char c, char *charset)
+void	free_split(t_data *d, t_split *s)
+{
+	if (s)
+	{
+		if (s->t)
+			free_tab(s->t);
+		free(s);
+	}
+	if (d)
+		ft_exit(d, "Split malloc fail\n", EXIT_FAILURE);
+}
+
+int	is_charset(t_split *s, char c)
 {
 	int	i;
 
 	i = 0;
-	while (charset[i] != '\0')
+	while (s->charset[i] != '\0')
 	{
-		if (charset[i] == c)
+		if (s->charset[i] == c)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	ft_strscount(char *str, char *charset)
+void	split_len(t_split *s)
 {
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
-	while (str[i] != '\0')
+	while (s->str[i] != '\0')
 	{
-		while (str[i] != '\0' && ft_ischarset(str[i], charset))
+		while (s->str[i] != '\0' && is_charset(s, s->str[i]))
 			i++;
-		if (str[i] != '\0')
-			count++;
-		while (str[i] != '\0' && !ft_ischarset(str[i], charset))
+		if (s->str[i] != '\0')
+			s->size++;
+		while (s->str[i] != '\0' && !is_charset(s, s->str[i]))
 			i++;
 	}
-	return (count);
 }
 
-int	ft_splitlen(char *str, int j, char *charset)
+void	split_copy(t_data *d, t_split *s)
 {
-	int	len;
-	int	i;
-
-	len = 0;
-	i = j;
-	while (str[i] != '\0' && ft_ischarset(str[i], charset))
-		i++;
-	while (str[i] != '\0' && !ft_ischarset(str[i], charset))
+	while (s->i < s->size)
 	{
-		len++;
-		i++;
-	}
-	return (len);
-}
-
-void	ft_strscpy(t_data *d, char **strs, char *str, int strs_size, char *charset)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		str_len;
-
-	i = 0;
-	j = 0;
-	while (i < strs_size)
-	{
-		str_len = ft_splitlen(str, j, charset);
-		strs[i] = (char *)malloc(sizeof(char) * str_len + 1);
-		if (!strs[i])
+		s->k = 0;
+		while (s->str[s->j] != '\0' && is_charset(s, s->str[s->j]))
+			s->j++;
+		while (s->str[s->j] != '\0' && !is_charset(s, s->str[s->j]))
 		{
-			ft_freetab(strs);
-			ft_exit(d, "in strcpy\n", EXIT_FAILURE);
+			s->k++;
+			s->j++;
 		}
-		while (ft_ischarset(str[j], charset))
-			j++;
-		k = 0;
-		while (k < str_len)
+		s->t->tab[s->i] = (char *)malloc(sizeof(char) * s->k + 1);
+		if (!s->t->tab[s->i])
+			free_split(d, s);
+		s->j -= s->k;
+		s->k = 0;
+		while (s->str[s->j] != '\0' && !is_charset(s, s->str[s->j]))
 		{
-			strs[i][k] = str[j];
-			j++;
-			k++;
+			s->t->tab[s->i][s->k] = s->str[s->j];
+			s->j++;
+			s->k++;
 		}
-		strs[i][k] = '\0';
-		i++;
+		s->t->tab[s->i][s->k] = '\0';
+		s->i++;
 	}
 }
 
-char	**ft_split(t_data *d, char *str, char *charset)
+t_tab	*ft_split(t_data *d, char *str, char *charset)
 {
-	int		strs_size;
-	char	**strs;
+	t_split	*s;
+	t_tab	*t;
 
-	strs_size = ft_strscount(str, charset);
-	strs = (char **)malloc(sizeof(char *) * strs_size + sizeof(int));
-	if (!strs)
-		ft_exit(d, "split malloc\n", EXIT_FAILURE);
-	ft_strscpy(d, strs, str, strs_size, charset);
-	return (strs);
+	s = (t_split *)malloc(sizeof(t_split));
+	if (!s)
+		free_split(d, s);
+	s->str = str;
+	s->charset = charset;
+	s->i = 0;
+	s->j = 0;
+	s->size = 0;
+	s->t = (t_tab *)malloc(sizeof(t_tab));
+	if (!s->t)
+		free_split(d, s);
+	split_len(s);
+	s->t->size = s->size;
+	s->t->tab = (char **)malloc(sizeof(char *) * s->size);
+	if (!s->t->tab)
+		free_split(d, s);
+	split_copy(d, s);
+	t = s->t;
+	free(s);
+	return (t);
 }

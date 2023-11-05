@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 00:45:42 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/31 00:45:46 by aberramo         ###   ########.fr       */
+/*   Created: 2023/10/31 09:19:24 by aberramo          #+#    #+#             */
+/*   Updated: 2023/10/31 09:25:44 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int	ft_strncmp(const char *s1, const char *s2, int n)
+char	*ft_strcpy(t_data *d, char *str)
 {
-	int	i;
+	int		i;
+	char	*str2;
 
+	str2 = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
+	if (!str2)
+		ft_exit(d, "Strcpy malloc fail\n", EXIT_FAILURE);
 	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n && s1[i] && s2[i] && s1[i] == s2[i])
+	while (str[i])
+	{
+		str[i] = str2[i];
 		i++;
-	if (i == n)
-		i--;
-	return ((unsigned char)s1[i] - s2[i]);
+	}
+	return (str2);
 }

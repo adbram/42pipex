@@ -5,62 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 19:36:53 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/30 20:24:03 by aberramo         ###   ########.fr       */
+/*   Created: 2023/10/30 23:31:07 by aberramo          #+#    #+#             */
+/*   Updated: 2023/11/05 19:02:50 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-void	ft_freetab(char **tab)
+void	free_tab(t_tab *t)
 {
 	int	i;
 
-	if (tab)
+	if (t != NULL)
 	{
-		i = 0;
-		while (tab[i])
+		if (t->tab != NULL)
 		{
-			free(tab[i]);
-			i++;
+			i = 0;
+			while (i < t->size)
+			{
+				free(t->tab[i]);
+				i++;
+			}
+			free(t->tab);
 		}
-		free(tab);
+		free(t);
 	}
 }
 
-void	ft_close_fds(t_data *d)
+void	close_fds(t_data *d)
 {
-	if (d->in_fd)
-		close(d->in_fd);
-	if (d->out_fd)
-		close(d->out_fd);
-	if (d->fds[0])
+	if (d->fds[0] > 0)
 		close(d->fds[0]);
-	if (d->fds[1])
+	if (d->fds[1] > 0)
 		close(d->fds[1]);
-	if (d->fd_tmp)
-		close(d->fd_tmp);
+	if (d->in_fd > 0)
+		close(d->in_fd);
+	if (d->out_fd > 0)
+		close(d->out_fd);
+	if (d->fd_tmp > 0)
+		close(d->out_fd);
 }
 
 void	ft_exit(t_data *d, char *msg, int status)
 {
 	if (status == EXIT_FAILURE)
 	{
-		ft_putstr_fd("Error\n", 2);
-		if (msg && errno != 0)
-			perror(msg);
-		else if (msg)
-			ft_putstr_fd(msg, 2);
+		ft_putstr_fd("Error\n", STDERR_FILENO);
+		if (msg)
+			ft_putstr_fd(msg, STDERR_FILENO);
 	}
-	if (d)
+	if (d != NULL)
 	{
-		if (d->cmd)
-			ft_freetab(d->cmd);
-		if (d->paths)
-			ft_freetab(d->paths);
-		if (d->path)
+		close_fds(d);
+		if (d->path != NULL)
 			free(d->path);
-		ft_close_fds(d);
+		if (d->cmd != NULL)
+			free_tab(d->cmd);
+		if (d->env_paths != NULL)
+			free_tab(d->env_paths);
+		if (d->pids != NULL)
+			free(d->pids);
 		free(d);
 	}
 	exit(status);

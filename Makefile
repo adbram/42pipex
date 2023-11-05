@@ -6,7 +6,7 @@
 #    By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 18:25:35 by aberramo          #+#    #+#              #
-#    Updated: 2023/10/28 19:31:34 by aberramo         ###   ########.fr        #
+#    Updated: 2023/11/05 19:10:20 by aberramo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,17 @@ NAME			= pipex
 SRCDIR			= src
 OBJDIR			= obj
 
-SRCS			= $(SRCDIR)/main.c\
-					$(SRCDIR)/pipex.c\
-					$(SRCDIR)/path.c\
+SRCS			= $(SRCDIR)/exec.c\
 					$(SRCDIR)/ft_exit.c\
 					$(SRCDIR)/ft_putstr_fd.c\
 					$(SRCDIR)/ft_split.c\
+					$(SRCDIR)/ft_strcpy.c\
 					$(SRCDIR)/ft_strjoin.c\
-					$(SRCDIR)/ft_strncmp.c
+					$(SRCDIR)/ft_strlen.c\
+					$(SRCDIR)/ft_strncmp.c\
+					$(SRCDIR)/main.c\
+					$(SRCDIR)/parser.c\
+					$(SRCDIR)/pipex.c
 OBJS			= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
 CC				= cc

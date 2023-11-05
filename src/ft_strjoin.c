@@ -5,24 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/28 19:09:19 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/28 19:53:39 by aberramo         ###   ########.fr       */
+/*   Created: 2023/10/31 18:43:23 by aberramo          #+#    #+#             */
+/*   Updated: 2023/11/03 15:13:28 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(t_data *d, char *s1, char *s2)
+char	*ft_strjoin(t_data *d, char *s1, char *s2, char del)
 {
 	int		join_len;
 	char	*joined;
@@ -32,7 +22,7 @@ char	*ft_strjoin(t_data *d, char *s1, char *s2)
 	join_len = ft_strlen(s1) + ft_strlen(s2) + 1;
 	joined = (char *)malloc(sizeof(char) * join_len + 1);
 	if (!joined)
-		ft_exit(d, "malloc strjoin\n", EXIT_FAILURE);
+		ft_exit(d, "Malloc fail strjoin\n", EXIT_FAILURE);
 	i = 0;
 	j = 0;
 	while (s1[i])
@@ -40,7 +30,7 @@ char	*ft_strjoin(t_data *d, char *s1, char *s2)
 		joined[i] = s1[i];
 		i++;
 	}
-	joined[i] = '/';
+	joined[i] = del;
 	i++;
 	while (s2[j])
 	{
