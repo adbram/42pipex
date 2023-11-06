@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:19:24 by aberramo          #+#    #+#             */
-/*   Updated: 2023/10/31 09:25:44 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:42:43 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ char	*ft_strcpy(t_data *d, char *str)
 	i = 0;
 	while (str[i])
 	{
-		str[i] = str2[i];
+		str2[i] = str[i];
 		i++;
 	}
+	str2[i] = '\0';
 	return (str2);
 }
