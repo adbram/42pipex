@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 01:06:23 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 20:55:59 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:32:46 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_split(t_data *d, t_split *s, t_tab *t)
 	if (t)
 		free_tab(t);
 	if (d)
-		ft_exit(d, "Split malloc fail\n", EXIT_FAILURE);
+		ft_exit(d, "Split malloc fail", EXIT_FAILURE);
 }
 
 int	is_charset(t_split *s, char c)

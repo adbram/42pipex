@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:39:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/06 19:17:39 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:38:37 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	get_env_paths(t_data *d)
 				return ;
 			free_tab(d->env_paths);
 			d->env_paths = NULL;
-			ft_exit(d, "PATH element in env empty\n", EXIT_FAILURE);
+			ft_exit(d, "PATH element in env empty", EXIT_FAILURE);
 		}
 		i++;
 	}
-	ft_exit(d, "No PATH element in env\n", EXIT_FAILURE);
+	ft_exit(d, "No PATH element in env", EXIT_FAILURE);
 }
 
 char	*get_path(t_data *d)
@@ -56,7 +56,7 @@ char	*get_path(t_data *d)
 	{
 		if (access(d->cmd->tab[0], X_OK) == 0)
 			return (ft_strcpy(d, d->cmd->tab[0]));
-		return (ft_exit(d, "Command not found\n", EXIT_FAILURE), NULL);
+		return (ft_exit(d, "Command fail", EXIT_FAILURE), NULL);
 	}
 	get_env_paths(d);
 	j = 0;
@@ -73,5 +73,5 @@ char	*get_path(t_data *d)
 		}
 		free(path);
 	}
-	return (ft_exit(d, "Command not found\n", EXIT_FAILURE), NULL);
+	return (ft_exit(d, "Command fail", EXIT_FAILURE), NULL);
 }

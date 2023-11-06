@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 23:50:11 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 20:35:08 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:34:02 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	pipex(t_data *d)
 	{
 		if (d->i + 1 < d->nb_cmds)
 			if (pipe(d->fds) < 0)
-				ft_exit(d, "Pipe fail\n", EXIT_FAILURE);
+				ft_exit(d, "Pipe fail", EXIT_FAILURE);
 		d->pids[d->i] = fork();
 		if (d->pids[d->i] < 0)
-			ft_exit(d, "Fork fail\n", EXIT_FAILURE);
+			ft_exit(d, "Fork fail", EXIT_FAILURE);
 		if (d->pids[d->i] == 0)
 			exec_cmd(d);
 		ft_close(&d->fds[1]);
