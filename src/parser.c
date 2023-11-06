@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:39:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 21:15:27 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:17:39 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,26 @@ char	*get_path(t_data *d)
 	int		j;
 	char	*path;
 
-	if (d->cmd->size < 1)
-		ft_exit(d, "Blank command\n", EXIT_FAILURE);
 	if (is_path(d->cmd->tab[0]) == 1)
-		return (ft_strcpy(d, d->cmd->tab[0]));
-	get_env_paths(d);
-	j = 1;
-	while (j < d->env_paths->size)
 	{
-		if (j > 0)
-		{
-			path = ft_strjoin(d, d->env_paths->tab[j], d->cmd->tab[0], '/');
-			if (access(path, X_OK) == 0)
-			{
-				free_tab(d->env_paths);
-				d->env_paths = NULL;
-				return (path);
-			}
-			free(path);
-		}
-		j++;
+		if (access(d->cmd->tab[0], X_OK) == 0)
+			return (ft_strcpy(d, d->cmd->tab[0]));
+		return (ft_exit(d, "Command not found\n", EXIT_FAILURE), NULL);
 	}
-	return (ft_exit(d, "No path\n", EXIT_FAILURE), NULL);
+	get_env_paths(d);
+	j = 0;
+	while (j++ < d->env_paths->size)
+	{
+		path = ft_strjoin(d, d->env_paths->tab[j], d->cmd->tab[0], '/');
+		if (access(path, X_OK) == 0)
+		{
+			free_tab(d->env_paths);
+			d->env_paths = NULL;
+			free(d->cmd->tab[0]);
+			d->cmd->tab[0] = ft_strcpy(d, path);
+			return (path);
+		}
+		free(path);
+	}
+	return (ft_exit(d, "Command not found\n", EXIT_FAILURE), NULL);
 }

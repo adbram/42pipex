@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 23:31:07 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/05 20:31:39 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:07:27 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_exit(t_data *d, char *msg, int status)
 	{
 		if (errno != 0)
 			perror(msg);
-		else
+		else if (msg)
 		{
 			ft_putstr_fd("Error\n", STDERR_FILENO);
 			if (msg)
