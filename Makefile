@@ -6,7 +6,7 @@
 #    By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 18:25:35 by aberramo          #+#    #+#              #
-#    Updated: 2023/11/06 20:26:30 by aberramo         ###   ########.fr        #
+#    Updated: 2023/11/16 14:25:51 by aberramo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ RM				= rm
 RMFLAGS			= -f
 
 $(NAME) : $(OBJDIR) $(OBJS)
-	@$(RM) $(RMFLAGS) $(OBJDIR_BONUS)/*
+	@$(RM) $(RMFLAGS) $(OBJDIR_BONUS)/* bonus
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 $(OBJDIR) :
@@ -70,14 +70,14 @@ all : $(NAME)
 bonus : $(OBJDIR_BONUS) $(OBJS_BONUS)
 	@$(RM) $(RMFLAGS) $(OBJDIR)/*
 	$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME)
+	@touch $@
 
 clean :
-	$(RM) $(RMFLAGS) $(OBJDIR)/*
-	$(RM) $(RMFLAGS) $(OBJDIR_BONUS)/*
+	$(RM) $(RMFLAGS) $(OBJDIR)/* $(OBJDIR_BONUS)/* bonus
 
 fclean : clean
 	$(RM) $(RMFLAGS) $(NAME)
 
 re : fclean all
 
-.PHONY : all bonus clean fclean re
+.PHONY : all clean fclean re
