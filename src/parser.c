@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:39:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/06 19:38:37 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:06:04 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ char	*get_path(t_data *d)
 	j = 0;
 	while (j++ < d->env_paths->size)
 	{
+		if (d->env_paths->tab[j] == NULL)
+			break ;
 		path = ft_strjoin(d, d->env_paths->tab[j], d->cmd->tab[0], '/');
 		if (access(path, X_OK) == 0)
 		{
