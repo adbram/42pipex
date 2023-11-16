@@ -6,13 +6,13 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:39:09 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/16 15:06:51 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:06:13 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc_bonus/pipex_bonus.h"
 
-int	is_path(char *str)
+char	*is_path(t_data *d, char *str)
 {
 	int	i;
 
@@ -20,10 +20,14 @@ int	is_path(char *str)
 	while (str[i])
 	{
 		if (str[i] == '/')
-			return (1);
+		{
+			if (access(str, X_OK) == 0)
+				return (ft_strcpy(d, str));
+			return (ft_exit(d, "Command fail", EXIT_FAILURE), NULL);
+		}
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 void	get_env_paths(t_data *d)
@@ -52,16 +56,13 @@ char	*get_path(t_data *d)
 	int		j;
 	char	*path;
 
-	if (is_path(d->cmd->tab[0]) == 1)
-	{
-		if (access(d->cmd->tab[0], X_OK) == 0)
-			return (ft_strcpy(d, d->cmd->tab[0]));
-		return (ft_exit(d, "Command fail", EXIT_FAILURE), NULL);
-	}
+	path = is_path(d, d->cmd->tab[0]);
+	if (path != NULL)
+		return (path);
 	get_env_paths(d);
 	j = 0;
 	while (j++ < d->env_paths->size)
-	{		
+	{
 		if (d->env_paths->tab[j] == NULL)
 			break ;
 		path = ft_strjoin(d, d->env_paths->tab[j], d->cmd->tab[0], '/');

@@ -6,7 +6,7 @@
 /*   By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:35:41 by aberramo          #+#    #+#             */
-/*   Updated: 2023/11/06 19:43:45 by aberramo         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:04:40 by aberramo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		ft_strlen(char *str);
 char	*ft_strcpy(t_data *d, char *str);
 char	*ft_strjoin(t_data *d, char *s1, char *s2, char del);
 
-int		is_path(char *str);
+char	*is_path(t_data *d, char *str);
 char	*get_path(t_data *d);
 
 void	pipex(t_data *d);
