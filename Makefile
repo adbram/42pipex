@@ -6,12 +6,13 @@
 #    By: aberramo <aberramo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 18:25:35 by aberramo          #+#    #+#              #
-#    Updated: 2023/11/16 14:25:51 by aberramo         ###   ########.fr        #
+#    Updated: 2023/11/16 19:19:04 by aberramo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .DEAULT_GOAL	= all
 NAME			= pipex
+NAME_BONUS		= pipex_bonus
 
 SRCDIR			= src
 OBJDIR			= obj
@@ -50,8 +51,10 @@ RM				= rm
 RMFLAGS			= -f
 
 $(NAME) : $(OBJDIR) $(OBJS)
-	@$(RM) $(RMFLAGS) $(OBJDIR_BONUS)/* bonus
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+$(NAME_BONUS) : $(OBJDIR_BONUS) $(OBJS_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS)
 
 $(OBJDIR) :
 	@$(MKDIR) $(OBJDIR)
@@ -67,17 +70,14 @@ $(OBJDIR_BONUS)/%.o : $(SRCDIR_BONUS)/%.c
 
 all : $(NAME)
 
-bonus : $(OBJDIR_BONUS) $(OBJS_BONUS)
-	@$(RM) $(RMFLAGS) $(OBJDIR)/*
-	$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME)
-	@touch $@
+bonus : $(NAME_BONUS)
 
 clean :
-	$(RM) $(RMFLAGS) $(OBJDIR)/* $(OBJDIR_BONUS)/* bonus
+	$(RM) $(RMFLAGS) $(OBJDIR)/* $(OBJDIR_BONUS)/*
 
 fclean : clean
-	$(RM) $(RMFLAGS) $(NAME)
+	$(RM) $(RMFLAGS) $(NAME) $(NAME_BONUS)
 
 re : fclean all
 
-.PHONY : all clean fclean re
+.PHONY : all bonus clean fclean re
